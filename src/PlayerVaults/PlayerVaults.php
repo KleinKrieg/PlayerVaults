@@ -223,16 +223,16 @@ class PlayerVaults extends PluginBase {
                 if(strpos($args[0], ".") !== false){
                     $sender->sendMessage(TF::RED."Please insert a valid number.");
                 }elseif($args[0] < 1 || $args[0] > $this->getMaxVaults()){
-                    $sender->sendMessage(TF::YELLOW."Usage: ".TF::WHITE."/pv <1-".$this->getMaxVaults().">");
+                    $sender->sendMessage(TF::YELLOW."Benutze: ".TF::WHITE."/bp <1-".$this->getMaxVaults().">");
                 }else{
                     if($sender->y + Provider::INVENTORY_HEIGHT > Level::Y_MAX){
-                        $sender->sendMessage(TF::RED."Cannot open vault at this height. Please lower down to at least Y=".Level::Y_MAX - Provider::INVENTORY_HEIGHT);
+                        $sender->sendMessage(TF::RED."Der Rucksack kann auf dieser Höhe nicht geöffnet werden. Bitte begebe dich mindestens zum Punkt Y=".Level::Y_MAX - Provider::INVENTORY_HEIGHT);
                     }else{
                         if($sender->hasPermission("playervaults.vault.".$args[0])){
-                            $sender->sendMessage(TF::YELLOW."Opening vault ".TF::AQUA."#".$args[0]."...");
+                            $sender->sendMessage(TF::YELLOW."Öffne Rucksack ".TF::AQUA."#".$args[0]."...");
                             $this->getData()->sendContents($sender, $args[0]);
                         }else{
-                            $sender->sendMessage(TF::RED."You don't have permission to access vault #".$args[0]);
+                          $sender->sendMessage(TF::RED."Du hast keinen Zugriff auf Rucksack #".$args[0]);
                         }
                     }
                 }
@@ -241,7 +241,7 @@ class PlayerVaults extends PluginBase {
                     switch(strtolower($args[0])){
                         case "of":
                             if(!isset($args[1])){
-                                $sender->sendMessage(TF::RED."Usage: /$cmd of <player> <number=1>");
+                                $sender->sendMessage(TF::RED."Benutze: /$cmd of <Spieler> <Nummer=1>");
                             }else{
                                 if(($player = $this->getServer()->getPlayer($args[1])) !== null){
                                     $args[1] = $player->getLowerCaseName();
@@ -249,7 +249,7 @@ class PlayerVaults extends PluginBase {
                                 }
                                 $args[2] = $args[2] ?? 1;
                                 if(!is_numeric($args[2])){
-                                    $sender->sendMessage(TF::RED."Usage: /$cmd of <player> <1-".$this->getMaxVaults().">");
+                                    $sender->sendMessage(TF::RED."Benutze: /$cmd of <Spieler> <1-".$this->getMaxVaults().">");
                                     return false;
                                 }
                                 $this->getData()->sendContents($args[1], $args[2] ?? 1, $sender->getName());
@@ -300,8 +300,8 @@ class PlayerVaults extends PluginBase {
             }
         }else{
             $sender->sendMessage(implode(TF::RESET.PHP_EOL, [
-                TF::GREEN."/$cmd <#> - ".TF::YELLOW."Open vault #.",
-                TF::GREEN."/$cmd about - ".TF::YELLOW."Get information about plugin."
+                TF::GREEN."/$cmd <Nummer> - ".TF::YELLOW."Öffne einen Rucksack mit der gegebenen Nummer.",
+                TF::GREEN."/hub - ".TF::YELLOW."Begebe dich zum Spawn."
             ]));
             if($sender->isOp()){
                 $sender->sendMessage(TF::RED."Use '/$cmd admin' for a list of admin commands.");
